@@ -18,9 +18,7 @@ def buildImage() {
 
 def deployApp() {
     
-    echo 'building the application..'
-    sh "mvn install"
-    echo "Build version ${params.VERSION}"
+    echo 'build deployed..'
 }
 
 
