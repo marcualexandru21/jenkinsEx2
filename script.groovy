@@ -5,7 +5,7 @@ def buildApp() {
     echo "Build version ${params.VERSION}"
 }
 
-return this
+
 
 def deployApp() {
     echo 'deploying the application...'
