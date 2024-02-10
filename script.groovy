@@ -14,10 +14,4 @@ def buildImage() {
 }
 
 
-def deployApp() {
-    
-    echo 'build deployed..'
-}
-
-
 return this
