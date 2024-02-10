@@ -3,8 +3,9 @@ def gv
 pipeline {   
     agent any
     tools {
-        maven 'Maven-3.9.6'
+        maven 'Maven-3.9'
     }
+
     stages {
         stage("init") {
             steps {
@@ -13,7 +14,21 @@ pipeline {
                 }
             }
         }
+
+        stage("test") {
+            steps {
+                script {
+                    gv.testApp()
+                }
+            }
+        }
+
         stage("build jar") {
+            when {
+                expression {
+                    BRANCH_NAME = "master"
+                }
+            }
             steps {
                 script {
                     gv.buildJar()
@@ -21,12 +36,31 @@ pipeline {
                 }
             }
         }
+
         stage("build image") {
+            when {
+                expression {
+                    BRANCH_NAME = "master"
+                }
+            }
             steps {
                 script {
                     gv.buildImage()
                 }
             }
-        }              
+        }
+
+        stage("deploy") {
+            when {
+                expression {
+                    BRANCH_NAME = "master"
+                }
+            }
+            }
+            steps {
+                script {
+                    gv.deployApp()
+                }
+            }
+        }               
     }
-} 
