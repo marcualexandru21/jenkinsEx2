@@ -1,10 +1,9 @@
-def gv
+// def gv
 
 pipeline {   
     agent any
     parameters {
         choice(name:"VERSION", choices: ['1.1', '1.2', '1.3'], description:'')
-        booleanParameter(name:"executeTests", defaultValue: true, description:'')
     }
     tools {
         maven 'Maven-3.9.6'
@@ -13,7 +12,7 @@ pipeline {
         stage("init") {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    //gv = load "script.groovy"
                 }
             }
         }
@@ -27,7 +26,7 @@ pipeline {
                 }
             }
             steps {
-                gv.buildApp()
+                //gv.buildApp()
                 echo "Deploying to ${ONE}"
                 echo "Deploying to ${TWO}"
             }
