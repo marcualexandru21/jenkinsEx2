@@ -2,6 +2,10 @@ def gv
 
 pipeline {   
     agent any
+    parameters {
+        choice(name:"VERSION", choices: ['1.1', '1.2', '1.3'], description:'')
+        booleanParameter(name:"executeTests", defaultValue: true, description:'')
+    }
     tools {
         maven 'Maven-3.9.6'
     }
