@@ -13,28 +13,19 @@ pipeline {
                 }
             }
         }
-        stage("build jar") {
-            steps {
-                script {
-                    gv.buildJar()
-
-                }
-            }
-        }
-
-        stage("build image") {
-            steps {
-                script {
-                    gv.buildImage()
-                }
-            }
-        }
-
         stage("deploy") {
-            steps {
-                script {
-                    gv.deployApp()
+            input {
+                message "Select the enviroment to deploy"
+                ok "Done"
+                parameters {
+                    choice(name:"ONE", choices: ['dev', 'staging', 'prod'] description:'')
+                    choice(name:"TWO", choices: ['dev', 'staging', 'prod'] description:'')
                 }
+            }
+            steps {
+                gv.buildApp()
+                echo "Deploying to ${ONE}"
+                echo "Deploying to ${TWO}"
             }
         }               
     }
