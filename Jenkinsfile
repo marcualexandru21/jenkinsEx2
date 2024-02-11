@@ -49,7 +49,7 @@ pipeline {
             }
             steps {
                 script {
-                    buildImage 'priv-docker-images:jma4.0'
+                    buildImage 'hamsamuxumed/priv-docker-images:jma4.0'
                 }
             }
         }
