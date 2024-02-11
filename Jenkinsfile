@@ -49,7 +49,7 @@ pipeline {
             }
             steps {
                 script {
-                    buildImage()
+                    buildImage 'priv-docker-images:jma4.0'
                 }
             }
         }
