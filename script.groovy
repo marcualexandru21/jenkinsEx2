@@ -14,7 +14,7 @@ def buildImage() {
     
     echo 'building the image..'
     withCredentials([
-        usernamePassword(credentialsID: 'docker-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')
+        usernamePassword(credentialsId: 'docker-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')
     ])
         sh "docker build -t priv-docker-images:jma3.0"
         sh "echo $PASSWORD | docker login -u $USER --password-stdin"
