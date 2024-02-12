@@ -33,7 +33,11 @@ pipeline {
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
                         sh "docker push nicolebrinza/twn-demo-app:${IMAGE_NAME}"
                         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> dd225ad3cb52fd2c321ec026f6aeabc68d26d42f
                }
             }
         }
@@ -54,7 +58,11 @@ pipeline {
                         sh 'git status'
                         sh 'git branch'
                         sh 'git config --list'
+<<<<<<< HEAD
 
+=======
+                        
+>>>>>>> dd225ad3cb52fd2c321ec026f6aeabc68d26d42f
                         sh "git remote set-url origin https://${USER}:${PASS}@gitlab.com/TWN1515/java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
