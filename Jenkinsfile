@@ -60,7 +60,9 @@ pipeline {
                         sh "git remote set-url origin https://${USER}:${PASS}@gitlab.com/TWN1515/java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
-                        sh 'git push        stage('commit version update'){
+                        sh 'git push        
+                        
+        stage('commit version update'){
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'gitlab-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]){
