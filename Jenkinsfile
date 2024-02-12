@@ -5,6 +5,7 @@ pipeline {
             steps {
                script {
                    echo 'testing the app'
+                   echo 'testing the integration'
                }
             }
         }
