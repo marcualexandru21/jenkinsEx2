@@ -9,6 +9,7 @@ def buildImage() {
       sh 'docker build -t nicolebrinza/twn-demo-app:jma-2.0 .'
       sh 'echo $PASS | docker login -u $USER --password-stdin'
       sh 'docker push nicolebrinza/twn-demo-app:jma-2.0'
+   }
 }
 
 def deployApp() {
