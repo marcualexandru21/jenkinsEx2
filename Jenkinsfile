@@ -5,7 +5,7 @@ pipeline {
             steps {
                script {
                    echo 'testing the app'
-                   echo 'testing the integration'
+                   echo 'testing the multi-branch webhook'
                }
             }
         }
