@@ -32,12 +32,7 @@ pipeline {
                         sh "docker build -t nicolebrinza/twn-demo-app:${IMAGE_NAME} ."
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
                         sh "docker push nicolebrinza/twn-demo-app:${IMAGE_NAME}"
-                        }
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> dd225ad3cb52fd2c321ec026f6aeabc68d26d42f
                }
             }
         }
