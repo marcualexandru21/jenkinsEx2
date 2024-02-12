@@ -10,11 +10,6 @@ pipeline {
             }
         }
         stage('build') {
-            when {
-                expression {
-                    branch_name == "master"
-                }
-            }
             steps {
                script {
                    echo 'building the app'
@@ -23,11 +18,6 @@ pipeline {
             }
         }
         stage('deploy') {
-            when {
-                expression {
-                    branch_name == "master"
-                }
-            }
             steps {
                 script {
                    echo 'deploying the app'
