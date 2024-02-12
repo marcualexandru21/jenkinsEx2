@@ -32,7 +32,6 @@ pipeline {
                 script {
                     echo "building the docker image..."
                     withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASS', usernameVariable: 'USER')]){
-                        // Updated Docker commands as per your request
                         sh "docker build -t nicolebrinza/twn-demo-app:${IMAGE_NAME} ."
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
                         sh "docker push nicolebrinza/twn-demo-app:${IMAGE_NAME}"
@@ -58,11 +57,10 @@ pipeline {
                         sh 'git branch'
                         sh 'git config --list'
 
-                        // Updated Git remote URL as per your request
                         sh "git remote set-url origin https://${USER}:${PASS}@gitlab.com/TWN1515/java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
-                        sh 'git push origin HEAD:jenkins-jobs'
+                        sh 'git push'
                     }
                 }
             }
