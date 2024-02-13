@@ -11,7 +11,7 @@ pipeline {
                 script {
                     echo 'incrementing app version...'
                     sh 'mvn build-helper:parse-version versions:set \
-                        -DnewVersion=\\${parsedVersion.majorVersion}.\\${parsedVersion.minorVersion}.\\${parsedVersion.nextIncrementalVersion} \
+                        -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} \
                         versions:commit'
                     def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
                     def version = matcher[0][1]
@@ -35,7 +35,7 @@ pipeline {
                         sh "docker build -t nicolebrinza/twn-demo-app:${IMAGE_NAME} ."
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
                         sh "docker push nicolebrinza/twn-demo-app:${IMAGE_NAME}"
-                    }
+                    } // Added missing closing bracket
                 }
             }
         }
@@ -60,8 +60,8 @@ pipeline {
                         sh "git remote set-url origin https://${USER}:${PASS}@gitlab.com/TWN1515/java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
-                        sh 'git push        
-                    }    
+                        sh 'git push origin HEAD:jenkins-jobs'
+                    }
                 }
             }
         }
