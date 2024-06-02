@@ -1,12 +1,9 @@
-def gv
-
 pipeline {
     agent any
     tools {
         maven 'maven-3.9'
     }
     stages {
-        
         stage('build jar') {
             steps {
                 script {
@@ -23,6 +20,7 @@ pipeline {
                         sh 'docker build -t jeromejay09/demo-app:jma-2.0 .'
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
                         sh 'docker push jeromejay09/demo-app:jma-2.0'
+                    }
                 }
             }
         }
