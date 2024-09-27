@@ -10,3 +10,5 @@ def buildApp() {
     echo "deploying the app..."
     echo "deploying version ${VERSION}"
 }
+
+return this
