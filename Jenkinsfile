@@ -31,7 +31,12 @@ pipeline {
             }
             steps {
                 script {
-                    echo "Deploying the application...."
+                    def dockerCmd = 'docker run -p 3080:3080 -d vmcgtlx/cgtlx-nana:5.0 '
+                   sshagent(['ade94bf7-b25d-40de-929b-7bf1d38efcbc']) {
+
+                     sh "ssh -o StrictHostKeyChecking=no ubuntu@18.188.120.79 ${dockerCmd}"  
+    // some block
+}
                 }
             }
         }               
