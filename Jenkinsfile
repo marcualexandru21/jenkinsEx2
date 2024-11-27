@@ -1,41 +1,27 @@
-def gv
-
-pipeline {   
+pipeline {
     agent any
     tools {
-        maven 'Maven'
+        maven 'maven-3.9' // Ensure this matches the Maven installation name in Jenkins
     }
     stages {
-        stage("init") {
+        stage('Build') {
             steps {
-                script {
-                    gv = load "script.groovy"
-                }
+                echo 'Building the application...'
+                sh 'mvn clean install'
             }
         }
-        stage("build jar") {
+        stage('Test') {
             steps {
-                script {
-                    gv.buildJar()
-
-                }
+                echo 'Running tests...'
+                sh 'mvn test'
             }
         }
-
-        stage("build image") {
+        stage('Build Image') {
             steps {
-                script {
-                    gv.buildImage()
-                }
+                echo 'Building Docker image...'
+                // Add Docker commands here, e.g.:
+                // sh 'docker build -t myapp:latest .'
             }
         }
-
-        stage("deploy") {
-            steps {
-                script {
-                    gv.deployApp()
-                }
-            }
-        }               
     }
-} 
+}
