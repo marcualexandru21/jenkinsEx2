@@ -1,9 +1,7 @@
-def gv
-
 pipeline {
     agent any
     tools {
-        maven 'Maven'
+        maven 'maven-3.9'  // Use the name of your configured Maven tool
     }
     stages {
         stage('increment version') {
@@ -35,6 +33,7 @@ pipeline {
                         sh "docker build -t nanatwn/demo-app:${IMAGE_NAME} ."
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
                         sh "docker push nanatwn/demo-app:${IMAGE_NAME}"
+                    }
                 }
             }
         }
@@ -45,7 +44,7 @@ pipeline {
                 }
             }
         }
-        stage('commit version update'){
+        stage('commit version update') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'gitlab-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]){
@@ -63,7 +62,6 @@ pipeline {
                     }
                 }
             }
-         }
         }
     }
 }
