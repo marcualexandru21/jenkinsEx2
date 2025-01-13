@@ -1,41 +1,45 @@
-def gv
-
 pipeline {   
     agent any
-    tools {
-        maven 'Maven'
-    }
     stages {
-        stage("init") {
+        stage("test") {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    echo "Testing the application...."
+                    echo  "Executing pipeline for branch $BRANCH_NAME"
                 }
             }
         }
-        stage("build jar") {
-            steps {
-                script {
-                    gv.buildJar()
-
+        
+        stage("build") {
+            when {
+                expression{
+                      BRANCH_NAME=="MASTER"
                 }
             }
-        }
-
-        stage("build image") {
             steps {
                 script {
-                    gv.buildImage()
+                    echo "Building the application...."
                 }
             }
         }
 
         stage("deploy") {
+              when {
+                expression{
+                      BRANCH_NAME=="MASTER"
+                }
+            }
             steps {
                 script {
-                    gv.deployApp()
+                    def dockerCmd = 'docker run -p 3080:3080 -d vmcgtlx/cgtlx-nana:5.0 '
+                   sshagent(['ade94bf7-b25d-40de-929b-7bf1d38efcbc']) {
+
+                     sh "ssh -o StrictHostKeyChecking=no ubuntu@18.188.120.79 ${dockerCmd}"  
+    // some block
+}
                 }
             }
         }               
-    }
-} 
+    } // Closes 'stages' block
+} // Closes 'pipeline' block
+
