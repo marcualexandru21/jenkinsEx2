@@ -18,19 +18,25 @@ pipeline {
 
         stage("build jar") {
             steps {
-                gv.buildJar()
+                script{
+                    gv.buildJar()
+                }                
             }
         }
         
         stage("build the docker image") {
-            steps {                
-                gv.buildAndPushImage()                
+            steps {   
+                script{
+                    gv.buildAndPushImage()
+                }            
             }
         }
 
         stage("deploy app") {
             steps {
-                gv.deployApp()
+                script{
+                    gv.deployApp()
+                }                
             }
         }
     
