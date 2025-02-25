@@ -1,41 +1,32 @@
-def gv
-
-pipeline {   
+pipeline {
     agent any
-    tools {
-        maven 'Maven'
+    tools{
+        maven 'maven-3.9.9'
     }
+
     stages {
-        stage("init") {
-            steps {
-                script {
-                    gv = load "script.groovy"
-                }
+
+        stage("build jar"){
+            steps{
+                echo "Building the jar"
+                sh 'mvn package'
             }
         }
-        stage("build jar") {
-            steps {
-                script {
-                    gv.buildJar()
-
-                }
-            }
-        }
-
-        stage("build image") {
-            steps {
-                script {
-                    gv.buildImage()
-                }
-            }
-        }
-
-        stage("deploy") {
-            steps {
-                script {
-                    gv.deployApp()
-                }
-            }
-        }               
     }
-} 
+
+    stages {
+        stage("build the docker image"){
+            steps{
+                echo "Building the docker image"
+                withCredentials([usernamePassword(credentialsID: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    sh 'docker build -t mbradu/demo-app-twn:jma-2.0 .'
+                    sh "echo ${PASS} | docker login -u ${USER} --password-stdin"
+                    sh 'docker push mbradu/demo-app-twn:jma-2.0'
+                }
+                
+            }
+        }
+    }
+
+
+}
