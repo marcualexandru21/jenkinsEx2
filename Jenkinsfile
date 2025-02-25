@@ -1,3 +1,4 @@
+def gv
 pipeline {
     agent any
     tools{
@@ -6,22 +7,29 @@ pipeline {
 
     stages {
 
+        stage("init"){
+            steps{
+                script{
+                    gv = load "script.groovy"
+                }
+            }
+        }
+
         stage("build jar"){
             steps{
-                echo "Building the jar"
-                sh 'mvn package'
+                gv.buildJar()
             }
         }
         
         stage("build the docker image"){
+            steps{                
+                gv.buildAndPushImage()                
+            }
+        }
+
+        stage("deploy app"){
             steps{
-                echo "Building the docker image"
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                    sh 'docker build -t mbradu/demo-app-twn:jma-2.0 .'
-                    sh "echo ${PASS} | docker login -u ${USER} --password-stdin"
-                    sh 'docker push mbradu/demo-app-twn:jma-2.0'
-                }
-                
+                gv.deployApp()
             }
         }
     
