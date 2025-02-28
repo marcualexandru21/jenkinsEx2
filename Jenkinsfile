@@ -29,7 +29,7 @@ pipeline {
         stage("build the docker image") {
             steps {   
                 script{
-                    buildImage()
+                    buildImage 'mbradu/demo-app-twn:jma-4.0'
                 }            
             }
         }
