@@ -29,9 +29,9 @@ pipeline {
         stage("build the docker image") {
             steps {   
                 script{
-                    buildImage 'mbradu/demo-app-twn:jma-6.0'
+                    buildImage 'mbradu/demo-app-twn:jma-5.0'
                     dockerLogin()
-                    dockerPush 'mbradu/demo-app-twn:jma-6.0'
+                    dockerPush 'mbradu/demo-app-twn:jma-5.0'
                 }            
             }
         }
