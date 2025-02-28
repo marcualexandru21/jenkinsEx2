@@ -1,5 +1,10 @@
 #!/user/bin/env groovy
-@Library('jenkins-shared-library')
+
+library identifier: 'jenkins-shared-library@master', retriever: modernSCM(
+    [$class: 'GitSCMSource',
+    remote: 'https://github.com/marcualexandru21/jenkins-shared-library.git',
+    credentialsId: 'github-credentials'])
+
 def gv
 
 pipeline {
@@ -22,15 +27,17 @@ pipeline {
             steps {
                 script{
                     buildJar()
-                }                
+                }
             }
         }
-        
+
         stage("build the docker image") {
-            steps {   
+            steps {
                 script{
-                    buildImage 'mbradu/demo-app-twn:jma-4.0'
-                }            
+                    buildImage 'mbradu/demo-app-twn:jma-5.0'
+                    dockerLogin()
+                    dockerPush 'mbradu/demo-app-twn:jma-5.0'
+                }
             }
         }
 
@@ -38,10 +45,10 @@ pipeline {
             steps {
                 script{
                     gv.deployApp()
-                }                
+                }
             }
         }
-    
+
     }
 
 }
