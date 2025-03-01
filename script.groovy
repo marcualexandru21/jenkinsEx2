@@ -1,5 +1,6 @@
 def buildJar() {
     echo "Building the jar"
+    echo "This is added to see if it will trigger automatically a new build"
     sh 'mvn package'
 }
 
