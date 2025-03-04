@@ -15,6 +15,16 @@ pipeline {
 
     stages {
 
+        stage("increment version") {
+            steps {
+                script {
+                   sh 'mvn build-helper:parse-version versions:set \
+                   -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
+                   versions:commit'
+                }
+            }
+        }
+
         stage("init") {
             steps {
                 script {
@@ -34,9 +44,13 @@ pipeline {
         stage("build the docker image") {
             steps {
                 script{
-                    buildImage 'mbradu/demo-app-twn:jma-5.0'
+                    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+                    def version = matcher[0][1]
+                    env.IMAGE_NAME = "version-$BUILD_NUMBER"
+
+                    buildImage "mbradu/demo-app-twn:jma-$IMAGE_NAME"
                     dockerLogin()
-                    dockerPush 'mbradu/demo-app-twn:jma-5.0'
+                    dockerPush "mbradu/demo-app-twn:jma-$IMAGE_NAME"
                 }
             }
         }
