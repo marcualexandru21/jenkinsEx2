@@ -46,11 +46,11 @@ pipeline {
                 script{
                     def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
                     def version = matcher[0][1]
-                    env.IMAGE_NAME = "version-$BUILD_NUMBER"
+                    IMAGE_NAME = "version-$BUILD_NUMBER"
 
-                    buildImage "mbradu/demo-app-twn:jma-$IMAGE_NAME"
+                    buildImage "mbradu/demo-app-twn:jma-${IMAGE_NAME}"
                     dockerLogin()
-                    dockerPush "mbradu/demo-app-twn:jma-$IMAGE_NAME"
+                    dockerPush "mbradu/demo-app-twn:jma-${IMAGE_NAME}"
                 }
             }
         }
