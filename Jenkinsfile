@@ -44,9 +44,10 @@ pipeline {
         stage("build the docker image") {
             steps {
                 script{
-                    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
-                    def version = matcher[0][1]
-                    IMAGE_NAME = "${version}-${BUILD_NUMBER}"
+                   // def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+                   // def version = matcher[0][1]
+                    def version = sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
+                    env.IMAGE_NAME = "${version}-${BUILD_NUMBER}"
 
                     buildImage "mbradu/demo-app-twn:jma-${IMAGE_NAME}"
                     dockerLogin()
