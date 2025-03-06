@@ -67,7 +67,7 @@ pipeline {
         stage('commit version update') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'gitHub-Credentials-WebHook', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    withCredentials([usernamePassword(credentialsId: 'git-push-token-as-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh 'git config user.email "ma21@gmail.com"'
                         sh 'git config user.name "MA21"'
 
