@@ -64,6 +64,26 @@ pipeline {
             }
         }
 
+        stage('commit version update') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh 'git config user.email "ma21@gmail.com"'
+                        sh 'git config user.name "MA21"'
+
+                        sh 'git status'
+                        sh 'git branch'
+                        sh 'git config --list'
+
+                        sh "git remote set-url origin https://${USER}:${PASS}@github.com/marcualexandru21/jenkinsEx2.git"
+                        sh 'git add .'
+                        sh 'git commit -m "ci: version bump"'
+                        sh 'git push origin HEAD:jenkins-shared-library'
+                    }
+                }
+            }
+        }
+
     }
 
 }
