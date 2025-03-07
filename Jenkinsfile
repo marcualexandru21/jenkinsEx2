@@ -68,8 +68,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'git-push-token-as-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh 'git config user.email "ma21@gmail.com"'
-                        sh 'git config user.name "MA21"'
+                        sh 'git config user.email "marcualexandru21@gmail.com"'
+                        sh 'git config user.name "marcualexandru21"'
 
                         sh 'git status'
                         sh 'git branch'
